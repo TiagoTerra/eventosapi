@@ -25,7 +25,19 @@ Serviço responsável para criação e manutenção de eventos: essa aplicação
 
 ![image](https://github.com/TiagoTerra/eventosapi/assets/7558795/b728a93d-8fa6-43c2-86f4-f3aae9ce4aa6)
 
-6. 
+# Execução
+   Execute o comando abaixo para rodar a aplicação:
+
+  > flask run
+
+# Construído com
+   
+   Aplicação desenvolvida usando o [vscode](https://code.visualstudio.com/) 
 
 # Autores
 Tiago Terra
+
+# Apoio e agradecimentos
+
+   Corpo docente e estudantil do curso de Especialização em Engenharia de Software PUC-Rio 2024 e Especialização em Desenvolvimento FullStack;
+
