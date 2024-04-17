@@ -69,7 +69,6 @@ def get_evento():
         return mapeaentidades_paraschemaeventos(eventos), 200
     except Exception as e:
         # caso um erro fora do previsto
-        alert("Erro ao consultar")
         logging.warning(f"Erro ao consultar os eventos {e}")
         return {"message": error_msg}, 500
 
@@ -89,7 +88,7 @@ def get_evento_by_id(query: SearchEventoSchema):
         return mapeaentidade_paraschemaevento(evento), 200
     except Exception as e:
         # caso um erro fora do previsto
-        alert("Erro ao consultar")
+        #alert("Erro ao consultar")
         logging.warning(f"Erro ao consultar os eventos {e}")
         return {"message": error_msg}, 500
 
@@ -423,7 +422,6 @@ def get_centrodeinteresse(query: SearchCentroDeInteresseSchema):
         return mapeaentidade_paraschemacentrodeinteresse(results), 200
     except Exception as e:
         # caso um erro fora do previsto
-        alert("Erro ao consultar")
         logging.warning(f"Erro ao consultar os centrodeinteresses {e}")
         return {"message": error_msg}, 500
 
@@ -486,7 +484,6 @@ def get_sala():
         return mapeaentidade_paraschemasala(salas), 200
     except Exception as e:
         # caso um erro fora do previsto
-        alert("Erro ao consultar")
         logging.warning(f"Erro ao consultar os salas {e}")
         return {"message": error_msg}, 500
 
@@ -581,7 +578,6 @@ def get_participante(query: SearchParticipanteSchema):
         return mapeaentidade_paraschemaparticipantes(participantes), 200
     except Exception as e:
         # caso um erro fora do previsto
-        alert("Erro ao consultar")
         logging.warning(f"Erro ao consultar os participantes {e}")
         return {"message": error_msg}, 500
 
@@ -607,7 +603,6 @@ def get_participante_centrosdeinteressee(query: SearchCentroDeInteresseSchema):
             centrosdeinteresseporevento), 200
     except Exception as e:
         # caso um erro fora do previsto
-        alert("Erro ao consultar")
         logging.warning(f"Erro ao consultar os participantes {e}")
         return {"message": error_msg}, 500
 

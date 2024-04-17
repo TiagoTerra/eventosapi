@@ -1,12 +1,12 @@
 -- DESCOMENTE ABAIXO CASO QUEIRA EXCLUIR TODOS OS OBJETOS DO BANCO
--- DROP TABLE StatusEvento;
--- DROP TABLE Sala;
--- DROP TABLE PessoaFisica;
--- DROP TABLE Evento;
--- DROP TABLE Participante;
--- DROP TABLE Responsavel;
--- DROP TABLE CentrosDeInteresse;
--- DROP TABLE ParticipanteCentroDeInteresse;
+ DROP TABLE StatusEvento;
+ DROP TABLE Sala;
+ DROP TABLE PessoaFisica;
+ DROP TABLE Evento;
+ DROP TABLE Participante;
+ DROP TABLE Responsavel;
+ DROP TABLE CentrosDeInteresse;
+ DROP TABLE ParticipanteCentroDeInteresse;
 
 -- -------------------------------------------------------------
 -- Cria estrutura de tabelas 
