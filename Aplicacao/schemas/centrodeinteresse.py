@@ -50,8 +50,8 @@ def mapeaentidade_paraschemacentrodeinteresse(centrodeinteresses: List[CentroDeI
     for centrodeinteresse in centrodeinteresses:
         result.append({
             "tema": centrodeinteresse.tema,
-            "responsavel": centrodeinteresse.nome,
-            "sala": centrodeinteresse.nome_1,
+            "responsavel": centrodeinteresse.nome_1,
+            "sala": centrodeinteresse.nome,
             "id" :centrodeinteresse.id
         })
 

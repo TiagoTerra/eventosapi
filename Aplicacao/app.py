@@ -103,7 +103,7 @@ def add_evento(form: EventoSchema):
     evento = Evento(
         nome=form.nome,
         data_inicio=trataData(form.data_inicio),
-        data_fim=trataData(form.data_fim))
+        data_fim=trataData(form.data_inicio))
     logging.debug(f"Adicionando evento de nome: '{evento.nome}'")
     try:
         # criando conexão com a base
@@ -193,13 +193,13 @@ def delete_evento(form: ExcluirSchema):
     except IntegrityError as e:
         # como a duplicidade do nome é a provável razão do IntegrityError
         logging.warning(e)
-        error_msg = "Responsavel de mesmo nome já salvo na base :/"
-        logging.warning(f"Erro ao excluir centro de interesse '{form.id}', {error_msg}")
+        error_msg = "Evento de mesmo nome já salvo na base :/"
+        logging.warning(f"Erro ao excluir evento '{form.id}', {error_msg}")
         return {"message": error_msg}, 409
     except Exception as e:
         # caso um erro fora do previsto
         error_msg = "Não foi possível excluir novo item :/"
-        logging.warning(f"Erro ao excluir responsavel '{form.id}', {error_msg}")
+        logging.warning(f"Erro ao excluir evento '{form.id}', {error_msg}")
         return {"message": error_msg}, 400
 
 # ========================================================================================================
@@ -374,8 +374,7 @@ def add_centrodeinteresse(form: CentroDeInteresseSchema):
         
         # efetivando o comando de adição de novo item na tabela
         session.commit()
-        logging.debug(f"Adicionado centrodeinteresse de nome: '{
-            centrodeinteresse.tema}'")
+        logging.debug(f"Adicionado centrodeinteresse de nome: '{centrodeinteresse.tema}'")
         
         return mapeaentidade_paraumschemacentrodeinteresse(
             centrodeinteresse), 200
@@ -383,15 +382,13 @@ def add_centrodeinteresse(form: CentroDeInteresseSchema):
     except IntegrityError as e:
         # como a duplicidade do nome é a provável razão do IntegrityError
         logging.warning(e)
-        error_msg = "CentroDeInteresse de mesmo nome já salvo na base :/"
-        logging.warning(f"Erro ao adicionar centrodeinteresse '{
-            centrodeinteresse.nome}', {error_msg}")
+        error_msg = "CentroDeInteresse de mesmo nome já salvo na base :"
+        logging.warning(f"Erro ao adicionar centrodeinteresse '{centrodeinteresse.nome}', {error_msg}")
         return {"message": error_msg}, 409
     except Exception as e:
         # caso um erro fora do previsto
         error_msg = "Não foi possível salvar novo item :/"
-        logging.warning(f"Erro ao adicionar centrodeinteresse '{
-            centrodeinteresse.nome}', {error_msg}")
+        logging.warning(f"Erro ao adicionar centrodeinteresse '{centrodeinteresse.nome}', {error_msg}")
         return {"message": error_msg}, 400
 
 def get_count(session, query):
@@ -444,8 +441,7 @@ def delete_centrodeinteresse(form: ExcluirSchema):
         if centrodeinteresseparaexclusao.participantes.count() > 0:
             return {"message": "Existem participantes vinculados a esse centro de interesse, necessário a exclusão!"}, 400
         
-        logging.debug(f"Obtem centro de interesse para exclusão : '{
-            centrodeinteresseparaexclusao.tema}'")
+        logging.debug(f"Obtem centro de interesse para exclusão : '{centrodeinteresseparaexclusao.tema}'")
         
         # exclui o responsavel: nossa exclusao é lógica para garantir rastreabilidade
         centrodeinteresseparaexclusao.ativo = 0
@@ -458,13 +454,12 @@ def delete_centrodeinteresse(form: ExcluirSchema):
     except IntegrityError as e:
         # como a duplicidade do nome é a provável razão do IntegrityError
         logging.warning(e)
-        error_msg = "Responsavel de mesmo nome já salvo na base :/"
         logging.warning(f"Erro ao excluir centro de interesse '{form.id}', {error_msg}")
         return {"message": error_msg}, 409
     except Exception as e:
         # caso um erro fora do previsto
         error_msg = "Não foi possível excluir novo item :/"
-        logging.warning(f"Erro ao excluir responsavel '{form.id}', {error_msg}")
+        logging.warning(f"Erro ao excluir centro de interesse '{form.id}', {error_msg}")
         return {"message": error_msg}, 400
 
 # ========================================================================================================
@@ -499,26 +494,19 @@ def add_participante(form: ParticipanteSchema):
     Retorna um participante de acordo com evento
     """    
     try:
-        participante = Participante(
-            nome=form.nome,
-            email=form.email,
-            inscricao=form.inscricao,
-            idevento=form.idevento,
-            ativo=1
-            )
 
-        logging.debug(f"Adicionando participante de nome: '{participante.nome}'")
+        logging.debug(f"Adicionando participante de nome: '{form.nome}'")
 
         # criando conexão com a base
         session = Session()
 
         # valida participantes
-        if not re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$',responsavel.email):
+        if not re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$',form.email):
             return {"message": "Formato de e-mail inválido!"}, 400
-        elif session.query(Responsavel).filter(
-            Responsavel.email == responsavel.email, 
-            Responsavel.idevento == responsavel.idevento,
-            Responsavel.ativo == 1).first() != None:
+        elif session.query(Participante).filter(
+            Participante.email == form.email, 
+            Participante.idevento == form.idevento,
+            Participante.ativo == 1).first() != None:
             return {"message": "Já existe um responsável cadastrado com esse e-mail"}, 400
 
         if session.query(Participante).filter(
@@ -536,6 +524,14 @@ def add_participante(form: ParticipanteSchema):
             Participante.idevento == form.idevento, Participante.inscricao == form.inscricao, 
             Participante.ativo == 1).count() > 0:
             return {"message": "Já existe um participante com essa inscrição"}, 400
+
+        participante = Participante(
+            nome=form.nome,
+            email=form.email,
+            inscricao=form.inscricao,
+            idevento=form.idevento,
+            ativo=1
+            )
 
         centrodeinteresses = session.query(CentroDeInteresse).filter(
             CentroDeInteresse.id.in_(form.centrosdeinteresse)).all()
@@ -560,6 +556,7 @@ def add_participante(form: ParticipanteSchema):
     except Exception as e:
         # caso um erro fora do previsto
         error_msg = "Não foi possível salvar novo item :/"
+        logging.warning(e)
         logging.warning(f"Erro ao adicionar participante '{participante.nome}', {error_msg}")
         return {"message": error_msg}, 400
 
@@ -634,11 +631,11 @@ def delete_participante(form: ExcluirSchema):
     except IntegrityError as e:
         # como a duplicidade do nome é a provável razão do IntegrityError
         logging.warning(e)
-        error_msg = "Responsavel de mesmo nome já salvo na base :/"
-        logging.warning(f"Erro ao adicionar responsavel '{responsavel.nome}', {error_msg}")
+        logging.warning(f"Erro ao exckyur participante '{form.id}', {error_msg}")
         return {"message": error_msg}, 409
     except Exception as e:
         # caso um erro fora do previsto
         error_msg = "Não foi possível salvar novo item :/"
-        logging.warning(f"Erro ao adicionar responsavel '{responsavel.nome}', {error_msg}")
+        logging.error(e)
+        logging.warning(f"Erro ao excluir participante {form.id}, {error_msg}")
         return {"message": error_msg}, 400
