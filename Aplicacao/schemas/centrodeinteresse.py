@@ -12,7 +12,7 @@ class SearchCentroDeInteresseSchema(BaseModel):
 class CentroDeInteresseSchema(BaseModel):
     """ Define um novo centro de interesse a ser inserido na base
     """
-    tema: str = "Justiça da lei de reencarnação"
+    tema: str = "Abordagens pedagógicas e o autismo infantil"
     salaId: int = 1
     responsavelId: int = 1
     id: int = 1
@@ -20,7 +20,7 @@ class CentroDeInteresseSchema(BaseModel):
 class CentroDeInteresseViewSchema(BaseModel):
     """ Define o centro de interesse retornado
     """
-    tema: str = "Justiça da lei de reencarnação"
+    tema: str = "Tecnologia e autismo"
     id: int = 1
 
 class ListagemCentroDeInteressesSchema(BaseModel):

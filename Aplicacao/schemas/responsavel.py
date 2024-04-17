@@ -10,8 +10,8 @@ class ExcluirSchema(BaseModel):
 class ResponsavelSchema(BaseModel):
     """ Define um novo responsavel a ser inserido na base
     """
-    nome: str = "1o Encontro de Estudos do Livro dos Espíritos"
-    email: str = "email"
+    nome: str = "Jane Doe"
+    email: str = "janedoe@email.com"
     cpf: str = "11122233344"
     matricula: str = "00000001"
     eventoId: int = 1
@@ -20,8 +20,8 @@ class ResponsavelSchema(BaseModel):
 class ResponsavelViewSchema(BaseModel):
     """ Define o responsavel retornado
     """
-    nome: str = "1o Encontro de Estudos do Livro dos Espíritos"
-    email: str = "email"
+    nome: str = "Jane Doe"
+    email: str = "janedoe@email.com"
     cpf: str = "11122233344"
     matricula: str = "00000001"
     id: int = 1

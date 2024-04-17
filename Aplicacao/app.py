@@ -18,7 +18,8 @@ from sqlalchemy.orm import sessionmaker, joinedload
 from sqlalchemy import create_engine, Table, MetaData, select 
 from typing import Optional, List
 
-info = Info(title="Minha API", version="1.0.0")
+info = Info(title="Eventos API", version="1.0.0",
+    description="Serviço que permite a manutenção de eventos (workshops, encontros de estudo)")
 app = OpenAPI(__name__, info=info)
 CORS(app)
 

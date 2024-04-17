@@ -9,8 +9,8 @@ class SearchParticipanteSchema(BaseModel):
 class ParticipanteSchema(BaseModel):
     """ Define um novo participante a ser inserido na base
     """
-    nome: str = "1o Encontro de Estudos do Livro dos Espíritos"
-    email: str = "email"
+    nome: str = "Jonh Doe"
+    email: str = "jondoe@email.com"
     cpf: str = "11122233344"
     inscricao: str = "00000001"
     centrosdeinteresse: List[int] = [1, 2, 3]
@@ -19,8 +19,8 @@ class ParticipanteSchema(BaseModel):
 class ParticipanteViewSchema(BaseModel):
     """ Define o participante retornado
     """
-    nome: str = "1o Encontro de Estudos do Livro dos Espíritos"
-    email: str = "email"
+    nome: str = "Jonh Doe"
+    email: str = "jondoe@email.com"
     cpf: str = "11122233344"
     inscricao: str = "00000001"
     id: int = 1

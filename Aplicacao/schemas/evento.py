@@ -10,7 +10,7 @@ class SearchEventoSchema(BaseModel):
 class EventoSchema(BaseModel):
     """ Representa um evento a ser adicionado ou atualizado 
     """
-    nome: str = "1o Encontro de Estudos do Livro dos Espíritos"
+    nome: str = "1o Encontro de Estudos sobe autismo na infância"
     data_inicio: str
     data_fim: str
     status_evento_id: int = 1
@@ -18,7 +18,7 @@ class EventoSchema(BaseModel):
 class EventoViewSchema(BaseModel):
     """ Representa um evento existente na base
     """
-    nome: str = "1o Encontro de Estudos do Livro dos Espíritos"
+    nome: str = "2o Encontro de Estudos sobe autismo na infância"
     data_inicio: str
     data_fim: str
     id: int = 1
