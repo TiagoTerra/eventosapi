@@ -9,7 +9,7 @@ from model.entidades import Evento, Sala, Responsavel,\
     CentroDeInteresse, StatusEvento, Participante, PessoaFisica
 
 db_path = "scripts/"
-# Verifica se o diretorio não exi   ste
+# Verifica se o diretorio não existe
 if not os.path.exists(db_path):
    # então cria o diretorio
    os.makedirs(db_path)
