@@ -39,5 +39,5 @@ Tiago Terra
 
 # Apoio e agradecimentos
 
-   Corpo docente e estudantil do curso de Especialização em Engenharia de Software PUC-Rio 2024 e Especialização em Desenvolvimento FullStack;
+   Corpo docente e estudantil do curso de Especialização em Engenharia de Software e Especialização em Desenvolvimento FullStack, PUC-Rio 2024;
 
