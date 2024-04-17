@@ -11,7 +11,7 @@ Serviço responsável para criação e manutenção de eventos: essa aplicação
 
        pip install -r requirements.txt
 
-3. A aplicação usa o [sqlite](https://www.sqlite.org/download.html) como banco de dados: após instalação executar os passos:
+3. A aplicação usa o [sqlite](https://www.sqlite.org/download.html) como banco de dados. Já existe um banco de dados criado, mas caso queira criar um banco novo siga o passo a passo abaixo após instalação do sqlite
   3.1 - Crie um banco com o nome que vc desejar;
   3.2 -  Execute em um prompt ocomando abaixo para criar as tabelas da base de ddos e a carga básica de dados para  aplicação funcionar:
 
@@ -39,5 +39,5 @@ Tiago Terra
 
 # Apoio e agradecimentos
 
-   Corpo docente e estudantil do curso de Especialização em Engenharia de Software PUC-Rio 2024 e Especialização em Desenvolvimento FullStack;
+   Corpo docente e estudantil do curso de Especialização em Engenharia de Software e Especialização em Desenvolvimento FullStack, PUC-Rio 2024;
 
