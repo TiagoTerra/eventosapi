@@ -15,7 +15,7 @@ if not os.path.exists(db_path):
    os.makedirs(db_path)
 
 # url de acesso ao banco (essa é uma url de acesso ao sqlite local)
-db_url = 'sqlite:///%s/encontro' % db_path
+db_url = 'sqlite:///%s/encontro.sqlite' % db_path
 
 # cria a engine de conexão com o banco
 engine = create_engine(db_url, echo=False)

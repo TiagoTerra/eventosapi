@@ -1,11 +1,10 @@
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-from datetime import datetime
 from typing import Union
+from datetime import datetime
+from sqlalchemy.orm import relationship
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table
 
 Base = declarative_base()
-
 class PessoaFisica(Base):
     __tablename__ = 'pessoafisica'
 
@@ -106,16 +105,45 @@ class Participante(PessoaFisica):
     inscricao = Column(String(200))
     idevento = Column(Integer, ForeignKey(Evento.id), 
         nullable=False)
+    cep = Column(String)
+    logradouro = Column(String)
+    numero = Column(String)
+    complemento = Column(String)
+    bairro = Column(String)
+    localidade = Column(String)
+    uf = Column(String)
 
     centros_de_interesse = relationship(
         "CentroDeInteresse", 
         secondary="participantecentrodeinteresse",
         back_populates="participantes")
 
-    def __init__(self, inscricao: str, idevento:int , **kwargs):
+    def __init__(self, inscricao: str, idevento:int ,cep: str, logradouro: str, numero: str
+        ,complemento: str, bairro: str, localidade: str, uf: str , **kwargs):
         super().__init__(**kwargs)
         self.inscricao = inscricao
         self.idevento = idevento
+        self.cep = cep
+        self.logradouro = logradouro
+        self.numero = numero
+        self.complemento = complemento
+        self.bairro = bairro
+        self.localidade = localidade
+        self.uf = uf
+
+    # def __init__(self, inscricao: str, idevento:int , cep: str, logradouro: str,
+    #     numero: str, complemento: str, bairro: str, localidade: str, uf: str,
+    #     **kwargs):
+    #     super().__init__(**kwargs)
+    #     self.inscricao = inscricao
+    #     self.idevento = idevento,
+    #     self.cep = cep,
+    #     self.logradouro = logradouro,
+    #     self.numero = numero, 
+    #     self.complemento = complemento,
+    #     self.bairro = bairro,
+    #     self.localidade = localidade,
+    #     self.uf = uf
 
     __mapper_args__ = {
         'inherit_condition': (id == PessoaFisica.id)

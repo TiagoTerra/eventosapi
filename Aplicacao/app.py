@@ -1,8 +1,11 @@
 from flask_openapi3 import OpenAPI, Info, Tag
-from flask import redirect
+from flask import redirect, request
 from urllib.parse import unquote
 import logging
 import re
+import jwt
+from datetime import datetime
+
 
 # basic do logging
 logging.basicConfig(filename='example.log', encoding='utf-8', level=logging.DEBUG)
@@ -21,7 +24,9 @@ from typing import Optional, List
 info = Info(title="Eventos API", version="1.0.0",
     description="Serviço que permite a manutenção de eventos (workshops, encontros de estudo)")
 app = OpenAPI(__name__, info=info)
+
 CORS(app)
+app.config['SECRET_KEY'] = 'your_secret_key'
 
 # definindo tags
 home_tag = Tag(name="Documentação", description="Seleção de documentação: Swagger, Redoc ou RapiDoc")
@@ -52,6 +57,31 @@ def home():
     """Redireciona para /openapi, tela que permite a escolha do estilo de documentação.
     """
     return redirect('/openapi')
+
+
+def token_required(f):
+    def wrap(*args, **kwargs):
+        token = request.headers.get('Authorization')
+
+        if not token:
+            return {'message': 'Token is missing'}, 403
+
+        try:
+            token = token.replace("Bearer ","")
+
+            data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
+        except jwt.ExpiredSignatureError:
+            return {'message': 'Token has expired'}, 403
+        except jwt.InvalidTokenError as e:
+            logging.debug('exception')
+            logging.debug(e)
+            return {'message': 'Token is invalid'}, 403
+
+        return f(*args, **kwargs)
+
+    wrap.__name__ = f.__name__
+    return wrap
+
 
 # ========================================================================================================
 # Endpoints de eventos
@@ -483,7 +513,6 @@ def get_sala():
         logging.warning(f"Erro ao consultar os salas {e}")
         return {"message": error_msg}, 500
 
-
 # ========================================================================================================
 # Endpoints de Participantes
 # ========================================================================================================
@@ -530,8 +559,15 @@ def add_participante(form: ParticipanteSchema):
             email=form.email,
             inscricao=form.inscricao,
             idevento=form.idevento,
-            ativo=1
-            )
+            ativo=1,
+            cep=form.cep,
+            logradouro=form.logradouro,
+            numero=form.numero,
+            complemento=form.complemento,
+            bairro=form.bairro,
+            localidade=form.localidade,
+            uf=form.uf
+        )
 
         centrodeinteresses = session.query(CentroDeInteresse).filter(
             CentroDeInteresse.id.in_(form.centrosdeinteresse)).all()
@@ -541,9 +577,10 @@ def add_participante(form: ParticipanteSchema):
 
         # adicionando participante
         session.add(participante)
+
         # efetivando o comando de adição de novo item na tabela
         session.commit()
-        
+
         logging.debug(f"Adicionado participante de nome: '{participante.nome}'")
         return mapeaentidade_paraschemaparticipante(participante), 200
         # return apresenta_participante(participante), 200

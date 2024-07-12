@@ -15,6 +15,13 @@ class ParticipanteSchema(BaseModel):
     inscricao: str = "00000001"
     centrosdeinteresse: List[int] = [1, 2, 3]
     idevento: int = 1
+    cep: str = ""
+    logradouro: str = ""
+    numero: str = ""
+    complemento: str = ""
+    bairro: str = ""
+    localidade: str = ""
+    uf: str = ""
 
 class ParticipanteViewSchema(BaseModel):
     """ Define o participante retornado
@@ -24,6 +31,13 @@ class ParticipanteViewSchema(BaseModel):
     cpf: str = "11122233344"
     inscricao: str = "00000001"
     id: int = 1
+    cep: str = ""
+    logradouro: str = ""
+    numero: str = ""
+    complemento: str = ""
+    bairro: str = ""
+    localidade: str = ""
+    uf: str = ""
 
 class ListagemParticipantesSchema(BaseModel):
     """ Define como uma listagem de participantes será retornada.
@@ -41,7 +55,14 @@ def mapeaentidade_paraschemaparticipantes(participantes: List[Participante]):
             "nome": participante.nome,
             "inscricao": participante.inscricao,
             "email": participante.email,
-            "id": participante.id
+            "id": participante.id,
+            "cep": participante.cep,
+            "logradouro": participante.logradouro,
+            "numero": participante.numero,
+            "complemento": participante.complemento,
+            "bairro": participante.bairro,
+            "localidade": participante.localidade,
+            "uf": participante.uf,
         })
 
     return {"participantes": result}
